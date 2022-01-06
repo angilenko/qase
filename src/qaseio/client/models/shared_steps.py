@@ -6,15 +6,23 @@ from qaseio.client.models.base import DefaultFilter, DefaultList
 
 
 @attr.s
+class SharedStep:
+    hash = attr.ib()
+    action = attr.ib(default=None)
+    data = attr.ib(default=None)
+    expected_result = attr.ib(default=None)
+
+
+@attr.s
 class SharedStepCreate:
     title: str = attr.ib()
-    steps: List[int] = attr.ib(factory=list)
+    steps: List[SharedStep] = attr.ib(factory=list)
 
 
 @attr.s
 class SharedStepUpdate:
     title: str = attr.ib(default=None)
-    steps: List[int] = attr.ib(factory=list)
+    steps: List[SharedStep] = attr.ib(factory=list)
 
 
 @attr.s
@@ -26,8 +34,7 @@ class SharedStepCreated:
 class SharedStepInfo:
     hash = attr.ib(default=None)
     title = attr.ib(default=None)
-    action = attr.ib(default=None)
-    expected_result = attr.ib(default=None)
+    steps: List[SharedStep] = attr.ib(factory=list)
     cases: List[int] = attr.ib(factory=list)
     cases_count: int = attr.ib(default=None)
     created = attr.ib(default=None)
